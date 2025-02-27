@@ -1,5 +1,6 @@
 import app/web.{type Context}
 import app/web/players
+import gleam/io
 import gleam/string_tree
 import wisp.{type Request, type Response}
 
@@ -13,7 +14,17 @@ pub fn handle_request(req: Request, ctx: Context) -> Response {
       wisp.log_info("endpoint: /players/" <> id <> "/")
       players.one(req, ctx, id)
     }
+    ["print_user_data"] -> {
+      wisp.log_info("endpoint: /print_user_data" <> "/")
+      players.print_user_data(req, ctx)
+    }
     // Rest not implemented
-    _ -> wisp.json_response(string_tree.from_string("{}"), 200)
+    _ -> {
+      io.debug(wisp.path_segments)
+      wisp.json_response(
+        string_tree.from_string("{\"Error\":\"Uncaught path in router\"}"),
+        200,
+      )
+    }
   }
 }
