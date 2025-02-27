@@ -64,7 +64,7 @@ fn process_player_data(_ctx: Context, json_body: dynamic.Dynamic) -> Response {
       Nil
     }
     _ -> {
-      io.println("an error or some shit")
+      io.println("Error processing skill data")
     }
   }
 
